@@ -5,17 +5,22 @@
     <button v-on:click="createTodo()">
       Créer
     </button>
-    <ul class="list-group">
-          <li class="d-flex align-items-center list-group-item" v-for="(todo, index) in $options.filters.FilterTasks(this.todosList, this.filterText)" :key="index"> 
+    <ul >
+          <li  v-for="(todo, index) in $options.filters.FilterTasks(this.todosList, this.filterText)" :key="index"> 
             <input type="checkbox" id="checkbox" v-model="todo.completed"> 
-            <input type ="text" :value="todo.description">
+            <input v-bind:class="{ completed: todo.completed }" type="texte" v-if="!todo.update" :value="todo.description"  readonly> 
+            
+            <input v-else type="text"  v-model="todoUpdate"  @blur="updateTodo(index)" >
+            <button v-on:click="startUpdate(index)">
+              <span class="fa fa-edit"></span>
+            </button>
             <button v-on:click="deleteTodo(index)">
               <span class="fa fa-trash"></span>
             </button>
           </li>
     </ul>
   <footer v-if= "this.todosList.length>0">
-  <span> tâches restantes : {{nonCompletedTasks()}}</span>
+  <span> tâches restantes : {{nonCompletedTasks()}}/{{this.todosList.length}}</span>
     <button v-on:click="updateFilterText('')">
       Toutes
     </button>
@@ -71,9 +76,10 @@ export default class Todos extends Vue {
   newTodo="";
   todosList: Task[] =[];
   filterText="";
+  todoUpdate="";
   createTodo(){
     if (this.newTodo.length > 0) {
-        this.todosList.push(new Task(this.newTodo, false))
+        this.todosList.push(new Task(this.newTodo, false, false))
       this.newTodo = "";
     }
   }
@@ -94,7 +100,15 @@ export default class Todos extends Vue {
       }
     });
   }
-
+  startUpdate(index: number)
+  {
+    this.todosList[index].update = true;
+    this.todoUpdate = this.todosList[index].description;
+  }
+  updateTodo(index: number){
+  this.todosList[index].description =this.todoUpdate;
+  this.todosList[index].update = false;
+  }
   deleteTodo(index: number){
     this.todosList.splice(index, 1);
   }
@@ -102,5 +116,10 @@ export default class Todos extends Vue {
 </script>
 
 <style scoped lang="scss">
-  
+  .completed {
+  text-decoration: line-through;
+}
+ul {
+  list-style-type: none;
+ }
 </style>
