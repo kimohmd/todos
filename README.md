@@ -1,24 +1,20 @@
 # todos
 
-## Project setup
-```
+## installation
+
+pour installer les dépendances
+
+```bash
 npm install
 ```
+## Lancement du serveur
 
-### Compiles and hot-reloads for development
+pour lancer le serveur de developpement
+ 
+```bash
+ng run serve
 ```
-npm run serve
-```
+puis rendez-vous dans `http://localhost:8081/`.
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Auteur
+Abdel Karim HAMMAD
