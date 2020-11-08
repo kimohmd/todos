@@ -12,7 +12,7 @@ npm install
 pour lancer le serveur de developpement
  
 ```bash
-ng run serve
+npm run serve
 ```
 puis rendez-vous dans `http://localhost:8081/`.
 
